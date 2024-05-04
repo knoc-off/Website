@@ -1,0 +1,77 @@
+$font-family: Arial, sans-serif;
+
+body {
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+nav {
+    ul {
+        list-style: none;
+        display: flex;
+
+        li {
+            margin-left: 20px;
+
+            a {
+                text-decoration: none;
+
+                &:hover {
+                    // Add your hover styles here
+                }
+            }
+        }
+    }
+}
+
+.about {
+    .about-content {
+        display: flex;
+        align-items: flex-start;
+
+        img {
+            flex: 0 0 auto;
+            width: 200px;
+            height: 100%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .about-text {
+            flex-grow: 1;
+        }
+    }
+}
+
+.projects {
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid;
+}
+

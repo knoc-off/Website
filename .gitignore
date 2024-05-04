@@ -1,5 +1,3 @@
-#nix/pkgs/actix-webserver/target
-nix/pkgs/*/target
 
 # Nix build artifacts
 /result
