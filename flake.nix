@@ -45,7 +45,11 @@
       });
 
 
-      nixosModules = import ./nix/module;
+      #nixosModules = ./nix/module;
+      nixosModules = rec {
+        nginxServe = import ./nix/module/nginxServe;
+        default = nginxServe;
+      };
 
       devShells = forAllSystems (system: {
         default = import ./nix/devshell {
