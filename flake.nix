@@ -45,7 +45,6 @@
       });
 
 
-      #nixosModules = ./nix/module;
       nixosModules = rec {
         nginxServe = import ./nix/module/nginxServe;
         default = nginxServe;
