@@ -1,6 +1,7 @@
 { pkgs }:
 
 {
-  actix-webserver = pkgs.callPackage ./actix-webserver { };
+  portfolio = pkgs.callPackage ./portfolio { };
+  webserver = pkgs.callPackage ./webserver { };
 }
 

@@ -1,8 +1,9 @@
 { pkgs, rustPlatform }:
 rustPlatform.buildRustPackage rec {
-  pname = "app";
+  pname = "portfolio";
   version = "0.1.0";
   src = ./.;
+  cargoLock.lockFile = ./Cargo.lock;
 
   nativeBuildInputs = with pkgs; [
     (rust-bin.stable."1.76.0".default.override {
@@ -21,7 +22,6 @@ rustPlatform.buildRustPackage rec {
     pkgs.super-tiny-icons
   ];
 
-  cargoLock.lockFile = ./Cargo.lock;
 
   buildPhase = ''
     runHook preBuild

@@ -6,8 +6,10 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, rust-overlay, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let
+      inherit (self) outputs;
+
       systems = [
         "aarch64-linux"
         "i686-linux"
@@ -20,9 +22,20 @@
 
       overlays = import ./nix/overlays { inherit inputs; };
 
+      #pkgsFor = system: import nixpkgs {
+      #  inherit system overlays;
+      #};
       pkgsFor = system: import nixpkgs {
-        inherit system overlays;
+        inherit system;
+        overlays = [
+          (_final: _prev: {
+            custom = outputs.packages.${system};
+          })
+        ] ++ overlays;
       };
+
+
+
     in
     rec {
       packages = forAllSystems (system: import ./nix/pkgs {
