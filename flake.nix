@@ -36,13 +36,18 @@
 
 
 
+
+
     in
-    rec {
+    {
       packages = forAllSystems (system: import ./nix/pkgs {
         pkgs = pkgsFor system;
       });
 
-      devShells = forAllSystems (system: rec {
+
+      nixosModules = import ./nix/module;
+
+      devShells = forAllSystems (system: {
         default = import ./nix/devshell {
           pkgs = pkgsFor system;
         };
