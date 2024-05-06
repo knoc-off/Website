@@ -19,12 +19,13 @@ pkgs.mkShell {
     wasm-bindgen-cli
   ];
   buildInputs = [
-    pkgs.super-tiny-icons
+    pkgs.super-tiny-icons # i need to figure out how to display icons from otf
   ];
   shellHook = ''
-    #mkdir -p icons
-    #cp -r ${pkgs.super-tiny-icons}/* icons/
-  '';
+      cd nix/pkgs/portfolio
+      rm icons
+      ln -s ${pkgs.super-tiny-icons}/ icons
+    '';
   RUST_BACKTRACE = 1;
 }
 

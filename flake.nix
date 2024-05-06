@@ -51,7 +51,7 @@
       };
 
       devShells = forAllSystems (system: {
-        default = import ./nix/devshell {
+        portfolio = import ./nix/devshell {
           pkgs = pkgsFor system;
         };
       });
