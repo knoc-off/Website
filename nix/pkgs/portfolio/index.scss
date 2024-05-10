@@ -1,77 +1,235 @@
-$font-family: Arial, sans-serif;
+// Color palette variables
+$colorPalette-Dark: #121113;
+$colorPalette-Light: #f7f7f2;
+$colorPalette-PrimaryAccent: #56604F;
+$colorPalette-SecondaryAccent: #899878;
 
+// Light mode color variables
+$light-background: $colorPalette-Light;
+$light-text: $colorPalette-Dark;
+$light-accent: $colorPalette-PrimaryAccent;
+$light-secondary: $colorPalette-SecondaryAccent;
+
+// Dark mode color variables
+$dark-background: #252422;
+$dark-text: #FFFCF2;
+$dark-accent: #EB5E28;
+$dark-secondary: #ED6D3C;
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('font-awesome/Font Awesome 6 Free-Solid-900.otf') format('opentype');
+}
+
+.icon {
+  font-family: 'FontAwesome';
+}
+
+// Global styles
 body {
-    font-family: $font-family;
-    margin: 0;
-    padding: 0;
-}
+  background-color: $light-background;
+  color: $light-text;
 
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-}
+  // Dark mode styles
+  &.dark-mode {
+    background-color: $dark-background;
+    color: $dark-text;
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
+    // Dark mode styles for main container
+    .main-container {
+      // Dark mode styles for photo container
+      .photo-container {
+        background-color: $dark-secondary;
+      }
 
-nav {
-    ul {
-        list-style: none;
-        display: flex;
+      // Dark mode styles for content container
+      .container {
+        // Dark mode styles for header
+        header {
+          h1 {
+            color: $dark-accent;
+          }
+          #theme-toggle {
+              color: $light-background;
+              background: $light-accent;
+          }
+        }
 
-        li {
-            margin-left: 20px;
-
-            a {
-                text-decoration: none;
-
-                &:hover {
-                    // Add your hover styles here
-                }
+        // Dark mode styles for main content
+        main {
+          section {
+            h2 {
+              color: $dark-secondary;
             }
+
+            // Dark mode styles for projects section
+            &.projects {
+              ul {
+                li {
+                  a {
+                    color: $dark-accent;
+                  }
+                }
+              }
+            }
+          }
         }
+
+        // Dark mode styles for footer
+        footer {
+          border-top: 1px solid $dark-secondary;
+
+          a {
+            color: $dark-secondary;
+          }
+        }
+      }
     }
+  }
 }
 
-.about {
-    .about-content {
+// Main container styles
+.main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  padding-right: 15rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  // Photo container styles
+  .photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: $light-secondary;
+    padding: 2rem;
+    border-radius: 8px;
+
+    img {
+      width: 200px;
+      height: auto;
+      border-radius: 5%;
+    }
+
+    nav {
+      ul {
         display: flex;
-        align-items: flex-start;
-
-        img {
-            flex: 0 0 auto;
-            width: 200px;
-            height: 100%;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-
-        .about-text {
-            flex-grow: 1;
-        }
-    }
-}
-
-.projects {
-    ul {
+        justify-content: center;
+        gap: 1rem;
         list-style: none;
         padding: 0;
 
         li {
-            margin-bottom: 10px;
+          a {
+            img {
+              width: 40px;
+              height: 40px;
+            }
+          }
         }
+      }
     }
-}
+  }
 
-footer {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid;
+  // Content container styles
+  .container {
+    flex: 1;
+
+    // Header styles
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+
+      h1 {
+        color: $light-accent;
+        margin: 0;
+      }
+
+      #theme-toggle {
+        //background-color: $light-background;
+        color: $dark-background;
+        background: $dark-secondary;
+
+        //radius: 5rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    // Main content styles
+    main {
+      section {
+        margin-bottom: 3rem;
+
+
+        h2 {
+          font-size: 2rem;
+          margin-bottom: 1.5rem;
+          color: $light-secondary;
+        }
+
+        // About section styles
+        &.about {
+          .about-content {
+            .about-text {
+              p {
+                margin-bottom: 1rem;
+                line-height: 1.6;
+              }
+            }
+          }
+        }
+
+        // Projects section styles
+        &.projects {
+          ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+              margin-bottom: 1rem;
+
+              a {
+                font-weight: bold;
+                color: $light-accent;
+                text-decoration: none;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Footer styles
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid $light-secondary;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+
+      a {
+        color: $light-secondary;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }
 

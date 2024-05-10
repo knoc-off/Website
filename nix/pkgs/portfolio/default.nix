@@ -26,8 +26,10 @@ rustPlatform.buildRustPackage rec {
   buildPhase = ''
     runHook preBuild
     mkdir -p $TMPDIR/output
-    mkdir -p icons
-    cp -r ${pkgs.super-tiny-icons}/* icons/
+
+    ln -s ${pkgs.super-tiny-icons}/ icons
+    ln -s ${pkgs.font-awesome}/share/fonts/opentype/ font-awesome
+
     trunk build --release --offline --dist $TMPDIR/output --public-url /
     runHook postBuild
   '';

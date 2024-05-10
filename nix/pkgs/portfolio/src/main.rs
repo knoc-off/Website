@@ -31,43 +31,47 @@ impl Component for Portfolio {
         });
 
         html! {
-            <div class="container">
-
-                <header>
-                    <h1>{ &self.name }</h1>
+            <div class="main-container">
+                <div class="photo-container">
+                    <img src="static/img.png" alt={ self.name.clone() } />
                     <nav>
                         <ul>
                             <li>
                                 <a href={ self.github_url.clone() } target="_blank">
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/github.svg" alt="GitHub" width="40" height="40" />
+                                    <img src="icons/share/icons/SuperTinyIcons/svg/github.svg" alt="GitHub" width="60" height="60" />
                                 </a>
                             </li>
                             <li>
                                 <a href={ self.linkedin_url.clone() } target="_blank">
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/linkedin.svg" alt="LinkedIn" width="40" height="40" />
+                                    <img src="icons/share/icons/SuperTinyIcons/svg/linkedin.svg" alt="LinkedIn" width="60" height="60" />
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick={ cv_onclick }>
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/pdf.svg" alt="CV" width="40" height="40" />
+                                    <img src="icons/share/icons/SuperTinyIcons/svg/pdf.svg" alt="CV" width="60" height="60" />
                                 </a>
                             </li>
                         </ul>
                     </nav>
+                </div>
+                <div class="container">
+                <header>
+                    <h1>{ &self.name }</h1>
+                    <button id="theme-toggle">{"Toggle Theme" } </button>
+                    <script src="theme.js"></script>
                 </header>
-
 
                 <main>
                     <section class="about">
                         <h2>{ "About Me" }</h2>
                         <div class="about-content">
-                            <img src="static/img.png" alt={ self.name.clone() } />
                             <div class="about-text">
-                                <p>{"I'm a self-taught programmer. Although I don't have a formal degree, I completed an IT course at the Technical University of Berlin. And I strive to maintain a well-rounded understanding of various aspects of computing."}</p>
+                                <p>{"I am a self-taught programmer passionate about technology. I have been developing my skills in various areas of computing from a young age. My interests include Rust programming and security systems, where I have gained practical expertise."}</p>
 
-                                <p>{"Lately, I've been learning NixOS, which has deepened my knowledge of Linux and system/server management. I use my computer as a testbed for experimentation and am keen to explore applications for CI/CD."}</p>
+                                <p>{"I completed an IT course at the Technical University of Berlin. Though I excel in programming and security, I have cultivated a broad skill set that encompasses system administration, network management, and web development."}</p>
 
-                                <p>{"I'm currently developing a website that uses WebAssembly (WASM) to visualize concepts. While it's still early, I'm excited about its potential and the progress made so far."}</p>
+                                <p>{"I have a focus on NixOS, which has greatly enhanced my proficiency in Linux and system/server management. I use my computer as a testbed for experimentation and am keen to explore the potential applications of NixOS in CI/CD environments."}</p>
+
                             </div>
                         </div>
                     </section>
@@ -75,6 +79,12 @@ impl Component for Portfolio {
                     <section class="projects">
                         <h2>{"Projects"}</h2>
                         <ul>
+                            <li>
+                                <a href="https://github.com/knoc-off/Website" target="_blank">
+                                    {"Yew Website"}
+                                </a>
+                                {": This website, built using the Yew framework, which I aim to grow into a more substantial project"}
+                            </li>
                             <li>
                                 <a href="https://github.com/knoc-off/nixos" target="_blank">
                                     {"NixOS Dotfiles"}
@@ -87,22 +97,14 @@ impl Component for Portfolio {
                                 </a>
                                 {": A Discord bot built for fun during the peak of the LLM hype"}
                             </li>
-                            <li>
-                                <a href="https://github.com/knoc-off/wasm-flake" target="_blank">
-                                    {"Yew Website"}
-                                </a>
-                                {": This website, built using the Yew framework, which I aim to grow into a more substantial project"}
-                            </li>
                         </ul>
                     </section>
                 </main>
                 <footer>
                     <p>{ format!("© 2024 {}. All rights reserved.", &self.name) }</p>
-                    <a href="https://watercss.kognise.dev/" target="_blank">
-                        {"built on watercss"}
-                    </a>
                 </footer>
             </div>
+        </div>
         }
     }
 }

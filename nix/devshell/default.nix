@@ -25,6 +25,8 @@ pkgs.mkShell {
       cd nix/pkgs/portfolio
       rm icons
       ln -s ${pkgs.super-tiny-icons}/ icons
+
+      ln -s ${pkgs.font-awesome}/share/fonts/opentype/ font-awesome
     '';
   RUST_BACKTRACE = 1;
 }
