@@ -1,5 +1,5 @@
-
+gowitness.sqlite3
 # Nix build artifacts
-/result
+result
 
 
