@@ -4,12 +4,14 @@ use super::markdown::MarkdownViewer;
 #[function_component(AboutSection)]
 pub fn about_section() -> Html {
     let markdown_content = r#"
-# About Section
-- this is a summary of me
-- test
+# About Me
+- This is a summary of me
+
     "#.to_string();
+
     html! {
-        <div>
+        <div class="about-container">
+            <img class="about-image" src="/static/img.png" alt="Description of Image" />
             <MarkdownViewer markdown={markdown_content} />
         </div>
     }

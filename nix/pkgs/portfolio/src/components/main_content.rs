@@ -12,7 +12,7 @@ pub fn main_content() -> Html {
 Website leveraging the Yew framework, which compiles to wasm. I aim to grow this project into something more substantial.
 
 ".to_string(),
-            link: "https://github.com/knoc-off/nixos/".to_string()
+            link: "https://github.com/knoc-off/Website".to_string()
         },
         Project {
             name: "Discord-GPT".to_string(),
@@ -20,7 +20,7 @@ Website leveraging the Yew framework, which compiles to wasm. I aim to grow this
             summary_md: "
 The ChatGPT-Discord-Bot is a Discord bot utilizing OpenAI's GPT to enable dynamic, sentiment-based conversations within Discord channels. It features context-aware interactions, semi-persistent channel-specific conversations, and automatic resets to maintain relevance and performance.
 ".to_string(),
-            link: "https://github.com/knoc-off/nixos/".to_string()
+            link: "https://github.com/knoc-off/DiscordGPT-rs".to_string()
         },
         Project {
             name: "My Nixos Configs".to_string(),
@@ -32,6 +32,15 @@ server management, custom pc, raspberry pi, etc.
 ".to_string(),
             link: "https://github.com/knoc-off/nixos/".to_string()
         },
+        Project {
+            name: "My Neovim Configs".to_string(),
+            image_url: "/icons/share/icons/SuperTinyIcons/svg/vim.svg".to_string(),
+            summary_md: "
+This nix-flake exports a carbon copy of the editor i use daily. this makes it extremely portable.
+
+".to_string(),
+            link: "https://github.com/knoc-off/neovim-config".to_string()
+        },
     ];
 
 
@@ -40,6 +49,7 @@ server management, custom pc, raspberry pi, etc.
         <main>
             <section>
                 <AboutSection />
+                <h2>{ "My Projects:" }</h2>
                 <Projects projects={projects} />
             </section>
         </main>
