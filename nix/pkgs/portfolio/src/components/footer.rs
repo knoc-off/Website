@@ -4,7 +4,7 @@ use yew::prelude::*;
 pub fn footer() -> Html {
     html! {
         <footer>
-            <p>{"© 2024 Company Name. All rights reserved."}</p>
+            <p>{"© 2024 Nicholas Selby. All rights reserved."}</p>
         </footer>
     }
 }

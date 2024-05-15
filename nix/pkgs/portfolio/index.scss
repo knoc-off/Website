@@ -1,17 +1,135 @@
+// Define colors and fonts
+$primary-color: #3498db;
+$secondary-color: #2c3e50;
+$background-color: #ecf0f1;
+$text-color: #333;
+$font-stack: 'Helvetica Neue', Arial, sans-serif;
+
+// General body styling
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-family: $font-stack;
+    background-color: $background-color;
+    color: $text-color;
+    line-height: 1.6;
 }
 
-nav, footer {
-    background-color: #f4f4f4;
-    padding: 10px 20px;
+// Navigation styling
+nav {
+    background: $secondary-color;
+    padding: 1em;
     text-align: center;
+
+    a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
 }
 
+// Main content area
 main {
     padding: 20px;
-    min-height: 400px;
+
+    section {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Projects list specific styles
+.projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover .project-item {
+            background-color: #e9e9e9;
+        }
+    }
+
+    .project-item {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+
+        .header {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+                border-radius: 50%;
+            }
+
+            .title {
+                h2 {
+                    margin: 0;
+                }
+            }
+        }
+
+        .markdown-view {
+            padding-top: 10px;
+
+            .markdown-content {
+                p {
+                    margin: 5px 0;
+                }
+            }
+        }
+    }
+}
+
+// Mobile responsiveness adjustments
+@media (max-width: 768px) {
+    nav a {
+        margin: 0 10px; // Reduce margin for smaller screens
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    .projects-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // Smaller columns on mobile
+    }
+
+    .project-item {
+        padding: 10px; // Reduced padding on mobile
+    }
+}
+
+// Footer styling
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background: $secondary-color;
+    color: white;
+}
+
+// Animations
+@keyframes blinkWarning {
+    0% { color: red; }
+    100% { color: white; }
+}
+
+.blinkWarning {
+    animation: blinkWarning 1s linear infinite;
 }

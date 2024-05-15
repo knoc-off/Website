@@ -1,3 +1,4 @@
+// src/components/link_item.rs
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]

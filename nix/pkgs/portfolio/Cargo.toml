@@ -30,6 +30,7 @@ pulldown-cmark = "0.10.3"
 wasm-bindgen-futures = "0.4.42"
 anyhow = "1.0.83"
 wasm-bindgen = "0.2.92"
+yew-router = "0.18.0"
 
 
 
