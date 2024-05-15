@@ -18,7 +18,7 @@ Website leveraging the Yew framework, which compiles to wasm. I aim to grow this
             name: "Discord-GPT".to_string(),
             image_url: "/icons/share/icons/SuperTinyIcons/svg/discord.svg".to_string(),
             summary_md: "
-The ChatGPT-Discord-Bot is a Discord bot utilizing OpenAI's GPT to enable dynamic, sentiment-based conversations within Discord channels. It features context-aware interactions, semi-persistent channel-specific conversations, and automatic resets to maintain relevance and performance.
+Discord bot using ChatGPT to enable sentiment-based conversations within Discord channels. Built when chatGPT hype was at its peak
 ".to_string(),
             link: "https://github.com/knoc-off/DiscordGPT-rs".to_string()
         },

@@ -17,7 +17,31 @@ body {
 nav {
     background: $secondary-color;
     padding: 1em;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo-links-container {
+        display: flex;
+        align-items: center;
+
+        a {
+            display: flex;
+            align-items: center;
+            margin-right: 0.1rem;
+            padding: 0px;
+            transition: transform 0.2s;
+                width: 3rem;
+
+            img {
+                border-radius: 50%;
+            }
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
 
     a {
         color: white;
@@ -70,7 +94,7 @@ main {
     a {
         text-decoration: none;
         color: inherit;
-        height: 105%;
+        //height: 100%;
 
         &:hover .project-item {
             background-color: #e9e9e9;
