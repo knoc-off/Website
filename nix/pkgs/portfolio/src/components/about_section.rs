@@ -6,7 +6,7 @@ use super::social_links::*;
 #[function_component(AboutSection)]
 pub fn about_section() -> Html {
     let markdown_content = r#"
-I am a self-taught programmer with a passion for technology. I have developed skills in Rust programming and security systems.
+I am a self-taught programmer. I have developed skills in Rust programming and security systems.
 
 I completed an IT course at the Technical University of Berlin, excelling in programming, security, system administration, network management, and web development.
 
