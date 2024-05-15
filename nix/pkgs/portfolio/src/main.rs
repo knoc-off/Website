@@ -1,114 +1,132 @@
-use yew::prelude::*;
-use web_sys::HtmlElement;
-use web_sys::wasm_bindgen::JsCast;
+use std::error::Error;
+use std::fmt::{self, Debug, Display, Formatter};
 
-struct Portfolio {
-    name: String,
-    github_url: String,
-    linkedin_url: String,
+use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
+use wasm_bindgen_futures::JsFuture;
+use web_sys::{Request, RequestInit, RequestMode, Response};
+use yew::{html, Component, Context, Html};
+
+mod components;
+use components::{navbar::Navbar, footer::Footer, main_content::MainContent, markdown::render_markdown};
+
+const MARKDOWN_URL: &str = "http://127.0.0.1:8080/static/about.md";
+const INCORRECT_URL: &str = "https://raw.githubusercontent.com/yewstack/yew/master/README.md.404";
+
+/// Something wrong has occurred while fetching an external resource.
+#[derive(Debug, Clone, PartialEq)]
+pub struct FetchError {
+    err: JsValue,
+}
+impl Display for FetchError {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        Debug::fmt(&self.err, f)
+    }
+}
+impl Error for FetchError {}
+
+impl From<JsValue> for FetchError {
+    fn from(value: JsValue) -> Self {
+        Self { err: value }
+    }
 }
 
-impl Component for Portfolio {
-    type Message = ();
+/// The possible states a fetch request can be in.
+pub enum FetchState<T> {
+    NotFetching,
+    Fetching,
+    Success(T),
+    Failed(FetchError),
+}
+
+/// Fetches markdown from Yew's README.md.
+///
+/// Consult the following for an example of the fetch api by the team behind web_sys:
+/// https://rustwasm.github.io/wasm-bindgen/examples/fetch.html
+async fn fetch_markdown(url: &'static str) -> Result<String, FetchError> {
+    let mut opts = RequestInit::new();
+    opts.method("GET");
+    opts.mode(RequestMode::Cors);
+
+    let request = Request::new_with_str_and_init(url, &opts)?;
+
+    let window = gloo::utils::window();
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
+    let resp: Response = resp_value.dyn_into().unwrap();
+
+    let text = JsFuture::from(resp.text()?).await?;
+    Ok(text.as_string().unwrap())
+}
+
+enum Msg {
+    SetMarkdownFetchState(FetchState<String>),
+    GetMarkdown,
+    GetError,
+}
+struct App {
+    markdown: FetchState<String>,
+}
+
+impl Component for App {
+    type Message = Msg;
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Portfolio {
-            name: "Nicholas Selby".to_string(),
-            github_url: "https://github.com/knoc-off".to_string(),
-            linkedin_url: "https://www.linkedin.com/in/niko-selby/".to_string(),
+        Self {
+            markdown: FetchState::NotFetching,
         }
     }
 
-    fn view(&self, _ctx: &Context<Self>) -> Html {
-        let cv_onclick = Callback::from(|_| {
-            let document = web_sys::window().unwrap().document().unwrap();
-            let link = document.create_element("a").unwrap();
-            let link_elem = link.dyn_into::<HtmlElement>().unwrap();
-            link_elem.set_attribute("href", "static/cv.pdf").unwrap();
-            link_elem.set_attribute("download", "cv.pdf").unwrap();
-            link_elem.click();
-        });
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            Msg::SetMarkdownFetchState(fetch_state) => {
+                self.markdown = fetch_state;
+                true
+            }
+            Msg::GetMarkdown => {
+                ctx.link().send_future(async {
+                    match fetch_markdown(MARKDOWN_URL).await {
+                        Ok(md) => Msg::SetMarkdownFetchState(FetchState::Success(md)),
+                        Err(err) => Msg::SetMarkdownFetchState(FetchState::Failed(err)),
+                    }
+                });
+                ctx.link()
+                    .send_message(Msg::SetMarkdownFetchState(FetchState::Fetching));
+                false
+            }
+            Msg::GetError => {
+                ctx.link().send_future(async {
+                    match fetch_markdown(INCORRECT_URL).await {
+                        Ok(md) => Msg::SetMarkdownFetchState(FetchState::Success(md)),
+                        Err(err) => Msg::SetMarkdownFetchState(FetchState::Failed(err)),
+                    }
+                });
+                ctx.link()
+                    .send_message(Msg::SetMarkdownFetchState(FetchState::Fetching));
+                false
+            }
+        }
+    }
 
-        html! {
-            <div class="main-container">
-                <div class="photo-container">
-                    <img src="static/img.png" alt={ self.name.clone() } />
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href={ self.github_url.clone() } target="_blank">
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/github.svg" alt="GitHub" width="60" height="60" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href={ self.linkedin_url.clone() } target="_blank">
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/linkedin.svg" alt="LinkedIn" width="60" height="60" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick={ cv_onclick }>
-                                    <img src="icons/share/icons/SuperTinyIcons/svg/pdf.svg" alt="CV" width="60" height="60" />
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="container">
-                <header>
-                    <h1>{ &self.name }</h1>
-                    <button id="theme-toggle">{"Toggle Theme" } </button>
-                    <script src="theme.js"></script>
-                </header>
-
-                <main>
-                    <section class="about">
-                        <h2>{ "About Me" }</h2>
-                        <div class="about-content">
-                            <div class="about-text">
-                                <p>{"I am a self-taught programmer passionate about technology. I have been developing my skills in various areas of computing from a young age. My interests include Rust programming and security systems, where I have gained practical expertise."}</p>
-
-                                <p>{"I completed an IT course at the Technical University of Berlin. Though I excel in programming and security, I have cultivated a broad skill set that encompasses system administration, network management, and web development."}</p>
-
-                                <p>{"I have a focus on NixOS, which has greatly enhanced my proficiency in Linux and system/server management. I use my computer as a testbed for experimentation and am keen to explore the potential applications of NixOS in CI/CD environments."}</p>
-
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="projects">
-                        <h2>{"Projects"}</h2>
-                        <ul>
-                            <li>
-                                <a href="https://github.com/knoc-off/Website" target="_blank">
-                                    {"Yew Website"}
-                                </a>
-                                {": This website, built using the Yew framework, which I aim to grow into a more substantial project"}
-                            </li>
-                            <li>
-                                <a href="https://github.com/knoc-off/nixos" target="_blank">
-                                    {"NixOS Dotfiles"}
-                                </a>
-                                {": A collection of packaged apps and solutions for various tasks, showcasing my experience with NixOS and system configuration."}
-                            </li>
-                            <li>
-                                <a href="https://github.com/knoc-off/DiscordGPT-rs" target="_blank">
-                                    {"DiscordGPT-rs"}
-                                </a>
-                                {": A Discord bot built for fun during the peak of the LLM hype"}
-                            </li>
-                        </ul>
-                    </section>
-                </main>
-                <footer>
-                    <p>{ format!("© 2024 {}. All rights reserved.", &self.name) }</p>
-                </footer>
-            </div>
-        </div>
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        match &self.markdown {
+            FetchState::NotFetching => html! {
+                <>
+                    <button onclick={ctx.link().callback(|_| Msg::GetMarkdown)}>
+                        { "Get Markdown" }
+                    </button>
+                    <button onclick={ctx.link().callback(|_| Msg::GetError)}>
+                        { "Get using incorrect URL" }
+                    </button>
+                </>
+            },
+            FetchState::Fetching => html! { "Fetching" },
+            FetchState::Success(data) => html! { render_markdown(data) },
+            FetchState::Failed(err) => html! { err },
         }
     }
 }
 
 fn main() {
-    yew::Renderer::<Portfolio>::new().render();
+    yew::Renderer::<App>::new().render();
 }
