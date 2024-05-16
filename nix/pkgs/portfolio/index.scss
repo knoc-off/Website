@@ -71,9 +71,10 @@ main {
 // about me section
 .about-container {
     display: flex;
+    max-width: 50rem;
     align-items: flex-start; /* Align items at the start of the flex container */
     .markdown-content {
-        margin: -15px; // Remove this?
+        margin: -10px; // Remove this?
     }
 }
 
