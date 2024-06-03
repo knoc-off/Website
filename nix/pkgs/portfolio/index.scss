@@ -68,28 +68,18 @@ main {
     }
 }
 
-// about me section
-.about-container {
-    display: flex;
-    max-width: 50rem;
-    align-items: flex-start; /* Align items at the start of the flex container */
-    .markdown-content {
-        margin: -10px; // Remove this?
-    }
-}
-
-.about-image {
-    width: 200px; /* or any other dimensions */
-    height: auto; /* maintain aspect ratio */
-    margin-right: 20px; /* space between the image and the Markdown content */
-    padding-bottom: 20px;
-}
 
 
 // Projects list specific styles
 .projects-list {
+    //display: flex;
+    //flex-wrap: wrap;
+    //flex-direction: column;
     display: grid;
+    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust the minmax value to control the minimum width of the grid items */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 
     a {
@@ -103,13 +93,13 @@ main {
     }
 
     .project-item {
+        //max-width: 200px;
         border: 1px solid #ccc;
         padding: 20px;
         border-radius: 8px;
         background-color: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s;
-        height: 85%;
 
         .header {
             display: flex;
@@ -135,11 +125,41 @@ main {
             .markdown-content {
                 p {
                     margin: 5px 0;
+                    padding-top: 0px;
+                    margin-top: 0px;
                 }
             }
         }
     }
 }
+
+// about me section
+.about-container {
+    display: flex;
+    flex-wrap: wrap; // Allow items to wrap to the next line
+    max-width: 50rem;
+    align-items: flex-start; // Align items at the start of the flex container
+
+    .markdown-content {
+        p {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        min-width: 200px;
+    }
+}
+
+.about-image {
+    width: 200px; // or any other dimensions
+    height: auto; // maintain aspect ratio
+    margin-right: 40px; // space between the image and the Markdown content
+    margin-bottom: 20px; // space between the image and the Markdown content
+    border-radius: 8px;
+    // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+
 
 // Mobile responsiveness adjustments
 @media (max-width: 768px) {
@@ -157,6 +177,21 @@ main {
 
     .project-item {
         padding: 10px; // Reduced padding on mobile
+    }
+
+    .about-container {
+        flex-direction: column; // Stack items vertically
+        align-items: center; // Center items horizontally
+        text-align: center; // Center text
+
+        .about-image {
+            margin-right: 0; // Remove right margin
+            margin-bottom: 20px; // Keep bottom margin
+        }
+
+        .markdown-content {
+            min-width: 0; // Allow content to take full width
+        }
     }
 }
 

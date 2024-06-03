@@ -1,5 +1,4 @@
 use crate::components::markdown::MarkdownViewer;
-use web_sys::window;
 use yew::prelude::*;
 
 // Assuming the Project struct is defined like this:
@@ -10,8 +9,6 @@ pub struct Project {
     pub summary_md: String,
     pub link: String,
 }
-
-
 
 #[function_component(ProjectItem)]
 pub fn project_item(props: &Project) -> Html {
@@ -32,7 +29,6 @@ pub fn project_item(props: &Project) -> Html {
         </a>
     }
 }
-
 
 #[derive(Properties, PartialEq)]
 pub struct ProjectsProps {

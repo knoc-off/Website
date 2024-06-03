@@ -28,7 +28,6 @@ Discord bot using ChatGPT to enable sentiment-based conversations within Discord
             summary_md: "
 My nixos configs, this defines all of my systems.
 server management, custom pc, raspberry pi, etc.
-
 ".to_string(),
             link: "https://github.com/knoc-off/nixos/".to_string()
         },
