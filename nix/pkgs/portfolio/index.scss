@@ -164,16 +164,8 @@ main {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-
-
-
-
-
-
-
-
-// Mobile responsiveness adjustments
-@media (max-width: 768px) {
+// Styles for aspect ratio 3/4 (height greater than width)
+@media (max-aspect-ratio: 3/4) {
     nav a {
         margin: 0 10px; // Reduce margin for smaller screens
     }
@@ -205,6 +197,7 @@ main {
         }
     }
 }
+
 
 // Footer styling
 footer {
